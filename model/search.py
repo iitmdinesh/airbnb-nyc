@@ -18,8 +18,8 @@ def sample_dpp(similarity_matrix, k):
         probabilities /= np.sum(probabilities)
 
         # Sample an item
-        selected_item = np.random.choice(idx, p=probabilities)
         selected_idx = np.random.choice(np.arange(0, L.shape[0]), p=probabilities)
+        selected_item = idx[selected_idx]
 
         # Add the selected item to the set
         selected_indices.append(selected_item)
