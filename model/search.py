@@ -32,9 +32,8 @@ def sample_dpp(similarity_matrix, k):
     return np.array(selected_indices)
 
 
-def dpp(sorted_scores, sorted_location, sorted_idx, num_results, delta_conditioning=5.0) -> np.ndarray:
-    similarity_matrix = 1.0 - np.exp(-squareform(pdist(sorted_location)) / 5000)
-    np.fill_diagonal(similarity_matrix, 1.0 + delta_conditioning)
+def dpp(sorted_scores, sorted_location, sorted_idx, num_results) -> np.ndarray:
+    similarity_matrix = np.exp(-squareform(pdist(sorted_location)) / 5000)
     relevance_matrix = sorted_scores.reshape(-1, 1) * sorted_scores.reshape(1, -1)
     dpp_matrix = relevance_matrix * similarity_matrix
     index = sample_dpp(dpp_matrix, num_results)
